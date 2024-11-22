@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Users {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  name      String?
+  email     String   @unique
+  imageUrl  String?
+  phone     Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Conversation {
+  id                String     @id @default(cuid()) // Unique identifier for each conversation
+  userId            String     // ID of the user engaging in the conversation
+  conversationName  String     // Name of the conversation
+  messages          Message[]  @relation("ConversationMessages") // Relation to Message model
+  createdAt         DateTime   @default(now())      // Timestamp for conversation start
+  updatedAt         DateTime   @updatedAt           // Automatically updated with each message
+
+  @@index([userId]) // Index on userId for efficient querying
+}
+
+model Message {
+  id                String     @id @default(cuid())  // Unique identifier for each message
+  conversationId    String                                   // Reference to the Conversation
+  sender            String     // "user" or "ai"
+  content           String     // Message text
+  timestamp         DateTime   @default(now())              // Timestamp of the message
+
+  // Establishing the relation to Conversation
+  conversation      Conversation @relation("ConversationMessages", fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId]) // Index for fast retrieval of messages per conversation
+}
+
+model UserApiLimit {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  count     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserSubscription {
+  id                     String    @id @default(cuid())
+  userId                 String    @unique
+  stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
+  stripeSubscriptionId   String?   @unique @map(name: "stripe_Subscription_id")
+  stripePriceId          String?   @map(name: "stripe_price_id")
+  stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
+}
