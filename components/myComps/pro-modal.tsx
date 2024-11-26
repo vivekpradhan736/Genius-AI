@@ -17,6 +17,7 @@ import { Card } from "../ui/card";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { useState } from "react";
+import { VscFiles } from "react-icons/vsc";
 
 const tools = [
     {
@@ -38,10 +39,10 @@ const tools = [
       bgColor: "bg-pink-700/10",
     },
     {
-      label: "Video Generation",
-      icon: VideoIcon,
-      color: "text-orange-700",
-      bgColor: "bg-orange-700/10",
+      label: "File Converter",
+      icon: VscFiles,
+      color: "text-yellow-400",
+      bgColor: "bg-yellow-700/10",
     },
     {
       label: "Code Generation",

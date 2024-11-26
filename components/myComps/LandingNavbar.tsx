@@ -25,7 +25,7 @@ const LandingNavbar = () => {
         </div>
         <h1
           className={cn(
-            "text-md sm:text-2xl font-bold text-white",
+            "text-md sm:text-2xl font-bold text-black",
             font.className
           )}
         >

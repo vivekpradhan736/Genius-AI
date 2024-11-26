@@ -111,7 +111,7 @@ const ResponseArea = ({
     <div className="p-4 lg:mx-4 mt-4 space-y-4 text-white">
       {isLoading && (
         <div className="p-8 rounded-lg w-full flex items-center justify-center bg-gray-200">
-          <Loader />
+          <Loader text={"AI Model is Computing..."} />
         </div>
       )}
       {promptResponceArr.length === 0 && !isLoading && (

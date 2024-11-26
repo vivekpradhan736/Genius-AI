@@ -11,8 +11,12 @@ const LandingHero = () => {
   const { isSignedIn } = useAuth();
 
   return (
-    <div className="text-white font-bold py-12 sm:py-36 text-center space-y-10">
-      <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl space-y-5 font-extrabold">
+    <div className=" font-bold py-12 sm:py-36 text-center space-y-10">
+      <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl space-y-5 font-extrabold"style={{
+    background: "linear-gradient(to right, #ff4800, #4E5AEB)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+  }} >
         {" "}
         Utilize the Power of AI
       </div>
@@ -31,7 +35,7 @@ const LandingHero = () => {
           }}
         />
       </div>
-      <div className="text-sm md:text-xl font-light text-zinc-400">
+      <div className="text-sm md:text-xl font-light text-zinc-900">
         Become x10 more productive by utilizing the power of AI.
       </div>
       <div>
@@ -45,16 +49,16 @@ const LandingHero = () => {
           </Button>
         </Link>
       </div>
-      <div className="text-zinc-400 text-xs md:text-sm font-normal mt-10">
+      {/* <div className="text-zinc-400 text-xs md:text-sm font-normal mt-10">
         This Project was created by <strong>Stavros Stamatakis</strong> and <strong>Lakshay Goyal</strong>
         <br />
         to test the Genrative AI and Google Gemini AI.
-      </div>
-      <div className="relative m-auto h-32 w-32 sm:h-64 sm:w-64">
+      </div> */}
+      {/* <div className="relative m-auto h-32 w-32 sm:h-64 sm:w-64">
         <Link href="https://www.uth.gr/en" target="blank">
           <Image alt="Logo-Robot" fill src="/logo2.png" />
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 };

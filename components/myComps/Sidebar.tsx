@@ -23,6 +23,7 @@ import { VscFiles } from "react-icons/vsc";
 import { BsFiletypeMp3 } from "react-icons/bs";
 import { BiMoviePlay } from "react-icons/bi";
 import { FaImages } from "react-icons/fa";
+import { PiSelectionBackgroundBold } from "react-icons/pi";
 
 const montserrat = Montserrat({ weight: "600", subsets: ["latin"] });
 
@@ -51,18 +52,24 @@ const routes = [
     href: "/image",
     color: "text-red-700",
   },
-  // {
-  //   label: "Video Generation",
-  //   icon: VideoIcon,
-  //   href: "/video",
-  //   color: "text-orange-700",
-  // },
   {
     label: "Video Summarizer",
     icon: LuFileVideo2,
     href: "/Videos_summarizer",
     color: "text-emerald-500",
   },
+  {
+    label: "Background Remover",
+    icon: PiSelectionBackgroundBold,
+    href: "/background_remove",
+    color: "text-blue-700",
+  },
+  // {
+  //   label: "Video Generation",
+  //   icon: VideoIcon,
+  //   href: "/video",
+  //   color: "text-orange-700",
+  // },
   // {
   //   label: "File Converter",
   //   icon: VscFiles,

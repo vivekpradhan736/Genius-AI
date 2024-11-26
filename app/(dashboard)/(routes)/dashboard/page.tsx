@@ -18,6 +18,7 @@ import { VscFiles } from "react-icons/vsc";
 import { BsFiletypeMp3 } from "react-icons/bs";
 import { BiMoviePlay } from "react-icons/bi";
 import { FaImages } from "react-icons/fa";
+import { PiSelectionBackgroundBold } from "react-icons/pi";
 
 const tools = [
   {
@@ -28,11 +29,11 @@ const tools = [
     href: "/conversation",
   },
   {
-    label: "Video Summarizer",
-    icon: LuFileVideo2,
-    color: "text-emerald-500",
-    bgColor: "bg-emerald-500/10",
-    href: "/Videos_summarizer",
+    label: "Code Generation",
+    icon: Code,
+    color: "text-green-700",
+    bgColor: "bg-green-500/10",
+    href: "/code",
   },
   {
     label: "Image Generation",
@@ -41,6 +42,13 @@ const tools = [
     bgColor: "bg-pink-700/10",
     href: "/image",
   },
+  {
+    label: "Video Summarizer",
+    icon: LuFileVideo2,
+    color: "text-emerald-500",
+    bgColor: "bg-emerald-500/10",
+    href: "/Videos_summarizer",
+  },
   // {
   //   label: "Video Generation",
   //   icon: VideoIcon,
@@ -48,13 +56,6 @@ const tools = [
   //   bgColor: "bg-orange-700/10",
   //   href: "/video",
   // },
-  {
-    label: "Code Generation",
-    icon: Code,
-    color: "text-green-700",
-    bgColor: "bg-green-500/10",
-    href: "/code",
-  },
   // {
   //   label: "File Converter",
   //   icon: VscFiles,
@@ -62,6 +63,13 @@ const tools = [
   //   color: "text-yellow-400",
   //   bgColor: "bg-yellow-400/20",
   // },
+  {
+    label: "Background Remover",
+    icon: PiSelectionBackgroundBold,
+    href: "/background_remove",
+    color: "text-blue-700",
+    bgColor: "bg-blue-500/20",
+  },
   {
     label: "Image Converter",
     icon: FaImages,

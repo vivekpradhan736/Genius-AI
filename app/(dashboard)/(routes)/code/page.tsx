@@ -7,6 +7,7 @@ import PromptArea from "@/components/myComps/PromptArea";
 import { ChatCompletionRequestMessage } from "openai";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { AxiosError } from "axios";
 import * as z from "zod";
 import { formSchema } from "./formSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -41,7 +42,7 @@ const CodePage = () => {
         role: "user",
         content: values.prompt,
       };
-      const newMessages = [...messages, userMessage];
+      // const newMessages = [...messages, userMessage];
 
       const responce = await axios.post("http://localhost:3000/api/code", {
         messages: values.prompt,
@@ -50,10 +51,12 @@ const CodePage = () => {
       setMessages((current) => [...current, userMessage, responce.data]);
 
       form.reset();
-    } catch (error: any) {
-      if(error?.response?.status === 403){
-        proModal.onOpen()
-      }
+    } catch (error) {
+      const axiosError = error as AxiosError;
+
+    if (axiosError.response?.status === 403) {
+      proModal.onOpen();
+    }
       console.log("⛔ [API_CONVERSATION_ERROR]: ", error);
       toast.error("Something went wrong");
 

@@ -58,23 +58,23 @@ export default function ChatSidebar({ allConversation, allConversationLoading, c
         <button className="p-2 hover:bg-gray-200 rounded">
           <Bot className="h-5 w-5" />
         </button>
-        <button onClick={createConversation} className="p-2 hover:bg-gray-200 rounded">
+        <button title="New Chat" onClick={createConversation} className="p-2 hover:bg-gray-200 rounded">
           <SquarePen className="h-5 w-5 stroke-[2px]" />
         </button>
       </div>
       <ScrollArea className="flex-grow">
         <div className="space-y-4">
           <SidebarSection title="Pinned">
-            <button onClick={createConversation} className="flex justify-between items-center w-full group px-2 py-1 text-sm rounded hover:bg-gray-200 transition-colors">
+            <button title="New Chat" onClick={createConversation} className="flex justify-between items-center w-full group px-2 py-1 text-sm rounded hover:bg-gray-200 transition-colors">
               <div className="flex">
                 <span className="mr-3"><Bot className="h-5 w-5" /></span>
                 <span className="truncate">Genius - AI</span>
               </div>
               <span
-                      className={`mr-3 text-gray-600 hidden group-hover:block hover:text-black `}
-                    >
-                      <SquarePen className="h-5 w-5 stroke-[2px]" />
-                    </span>
+                className={`mr-3 text-gray-600 hidden group-hover:block hover:text-black `}
+              >
+                 <SquarePen className="h-5 w-5 stroke-[2px]" />
+              </span>
             </button>
             <SidebarItem icon={<Grid className="h-5 w-5" />} label="Explore More Model" />
           </SidebarSection>

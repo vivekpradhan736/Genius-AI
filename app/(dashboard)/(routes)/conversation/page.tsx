@@ -19,6 +19,8 @@ import { useProModal } from "@/hooks/use-pro-modal";
 import ChatSidebar from "@/components/myComps/ChatSidebar";
 import { Button } from "@/components/ui/button";
 import { useAuth  } from '@clerk/nextjs'
+import Image from "next/image.js";
+import Loader from "@/components/myComps/Loader";
 
 const ConversationPage = () => {
   const { userId } = useAuth()
@@ -32,6 +34,7 @@ const ConversationPage = () => {
     conversationName?: string;
     messages?: ChatCompletionRequestMessage[];
   } | null>(null);
+  const [fetchConversationLoading, setFetchConversationLoading] = useState(false);
   const router = useRouter();
   const proModal = useProModal();
 
@@ -87,14 +90,19 @@ const ConversationPage = () => {
 
   const fetchConversation = async () => {
     try {
+      setFetchConversationLoading(true)
       const response = await axios.get("/api/conversationNewestFind");
       if (response.status === 200 && response.data.conversation) {
+        console.log("response",response)
         setCurrentConversation(response.data.conversation)
+        setFetchConversationLoading(false)
         router.push(`/conversation/${response.data.conversation.id}`)
       } else {
+        setFetchConversationLoading(false)
         console.error("No conversation found");
       }
     } catch (error) {
+      setFetchConversationLoading(false)
       if (axios.isAxiosError(error)) {
         console.error("Error fetching conversation:", error.response?.data.message || error.message);
       } else {
@@ -163,14 +171,25 @@ const ConversationPage = () => {
         bgColor="bg-violet-500/20"
         />
         {!currentConversation ? (
+          !currentConversation && fetchConversationLoading == true ? (
+            <div className="flex justify-center items-center h-screen">
+              <div className="">
+                <Loader text={"Loading..."} />
+              </div>
+            </div>
+          ) : (
           <div className="flex justify-center items-center h-[70vh]">
-          <div className="flex flex-col w-52 justify-center items-center">
-            <p className="text-lg text-gray-500">No conversation found</p>
-            <Button className="" onClick={createConversation} variant="premium">
+            <div className="flex flex-col w-52 justify-center items-center">
+              <div className="relative h-40 w-40 sm:h-52 sm:w-52 sm:mt-1">
+                <Image alt="Empty" fill src="/empty.png" />
+              </div>
+              <p className="text-lg text-gray-500">No conversation found</p>
+              <Button className="" onClick={createConversation} variant="premium">
               Create new chat
-            </Button>
+              </Button>
+            </div>
           </div>
-          </div>
+          )
         ) : (
       <PromptArea
         type="conversation"

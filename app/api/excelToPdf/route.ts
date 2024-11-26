@@ -8,17 +8,12 @@ import { promisify } from 'util';
 
 const unlinkFile = promisify(fs.unlink);
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
 // Helper function to parse form data in the app route
 async function parseForm(req: NextRequest): Promise<{ fields: formidable.Fields, files: formidable.Files }> {
   const form = new formidable.IncomingForm();
+  const reqBody = await req.blob();
   return new Promise((resolve, reject) => {
-    form.parse(req as any, (err, fields, files) => {
+    form.parse(reqBody.stream() as any, (err, fields, files) => {
       if (err) reject(err);
       else resolve({ fields, files });
     });
@@ -44,7 +39,7 @@ export async function POST(req: NextRequest) {
     await browser.close();
 
     // Set response headers and send the PDF buffer
-    const response = new Response(pdfBuffer, {
+    const response = new NextResponse(pdfBuffer, {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': 'attachment; filename=output.pdf',
@@ -60,3 +55,6 @@ export async function POST(req: NextRequest) {
     return new NextResponse('Failed to convert Excel to PDF', { status: 500 });
   }
 }
+
+// Optional runtime configuration
+export const runtime = 'nodejs'; // Ensures the route runs in Node.js

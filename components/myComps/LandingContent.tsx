@@ -58,14 +58,15 @@ const technologies = [
 const LandingContent = () => {
   return (
     <div className="px-10 pb-20">
-      <h2 className="text-center text-4xl text-white font-extrabold mb-10">
+      <h2 className="text-center text-4xl text-purple-500 font-extrabold mb-10">
         Employed Technologies
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {technologies.map((tech) => (
           <Card
             key={tech.title}
-            className="bg-[#192339] border-none text-white"
+            className="bg-[#7d35b4] border-none text-white"
+            // className= "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white border-0"
           >
             <CardHeader className="">
               <CardTitle className="flex items-center justify-between gap-x-2">
