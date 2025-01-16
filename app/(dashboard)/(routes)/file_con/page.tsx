@@ -297,12 +297,14 @@ const FileCon = () => {
                       size="sm"
                       className="flex-shrink-0 mt-2 sm:mt-0"
                       onClick={() => {
-                        const link = document.createElement('a')
-                        link.href = file.url
-                        link.download = file.name.replace(/\.(doc|docx)$/, '.pdf')
-                        document.body.appendChild(link)
-                        link.click()
-                        document.body.removeChild(link)
+                        if (file.url) {  // Type check to ensure file.url is a string
+                          const link = document.createElement('a');
+                          link.href = file.url;
+                          link.download = file.name.replace(/\.(doc|docx)$/, '.pdf');
+                          document.body.appendChild(link);
+                          link.click();
+                          document.body.removeChild(link);
+                        }
                       }}
                     >
                       <Download className="h-4 w-4 mr-2" />
