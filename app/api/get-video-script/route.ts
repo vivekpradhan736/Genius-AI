@@ -1,7 +1,7 @@
 // import { chatSession } from "@/lib/AiModel";
 // import { NextResponse } from "next/server";
 
-// export async function POST(req: Request) {
+export async function POST() {
 //     try {
 //         const { prompt } = await req.json();
 //         console.log(prompt);
@@ -14,4 +14,4 @@
 //     } catch (e) {
 //          return NextResponse.json({'Error':e})
 //     }
-// }
+}

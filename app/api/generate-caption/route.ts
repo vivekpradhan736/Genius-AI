@@ -3,7 +3,7 @@
 // import { AssemblyAI } from "assemblyai";
 // import { NextResponse } from "next/server";
 
-// export async function POST(req: Request) {
+export async function POST() {
 //     try {
 //          const { audioFileUrl } = await req.json();
 //    const client = new AssemblyAI({
@@ -24,4 +24,4 @@
 //     catch(err) {
 //        return NextResponse.json({'error':err}) 
 //     }
-// }
+}
