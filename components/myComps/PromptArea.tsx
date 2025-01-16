@@ -1,18 +1,12 @@
 "use client";
 
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
-import * as z from "zod";
-import { useRouter } from "next/navigation";
-import ChatCompletionRequestMessage from "openai";
-import { useUser } from '@clerk/nextjs';
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { Slider } from "@/components/ui/slider"
-import { Send, ChevronDown, ChevronUp, RefreshCw } from "lucide-react";
+import { Send } from "lucide-react";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import {
   Select,
@@ -26,9 +20,6 @@ import {
   amountOptions,
   resolutionOptions,
 } from "../../app/(dashboard)/(routes)/image/formSchema";
-import {
-  videoSizeOptions,
-} from "../../app/(dashboard)/(routes)/video/formSchema";
 import { cn } from "@/lib/utils";
 import {
   Popover,
@@ -39,8 +30,6 @@ import SelectTopic from "./SelectTopic";
 import SelectStyle from "./SelectStyle";
 import SelectDuration from "./SelectDuration";
 import CustomLoading from "./CustomLoading";
-import PlayerDialog from "./PlayerDialog";
-import { toast } from "sonner";
 import { v4 as uuidv4 } from 'uuid';
 // import { VideoDataContext } from '@/app/__context/VideoDataContext';
 
@@ -59,21 +48,21 @@ interface PromptAreaProps {
   transcriptResponce: any;
 }
 
-interface VideoDataType {
-  videoScript: Array<{
-    content_text: string;
-    imagePrompt: string;
-  }>;
-  audioFileUrl: string;
-  captions: string;
-  imageList: string[];
-};
+// interface VideoDataType {
+//   videoScript: Array<{
+//     content_text: string;
+//     imagePrompt: string;
+//   }>;
+//   audioFileUrl: string;
+//   captions: string;
+//   imageList: string[];
+// };
 
-interface UserDetailType {
-  credits: number;
-  email: string;
-  userId: string;
-};
+// interface UserDetailType {
+//   credits: number;
+//   email: string;
+//   userId: string;
+// };
 
 interface FormData {
   topic?: string;
@@ -81,17 +70,17 @@ interface FormData {
   duration?: string;
 }
 
-type apiEndpointsType = {
-  [key: string]: string;
-};
+// type apiEndpointsType = {
+//   [key: string]: string;
+// };
 
-const apiEndpoints: apiEndpointsType = {
-  conversation: "/api/conversation",
-  image: "/api/image",
-  video: "/api/video",
-  Videos_summarizer: "/api/Videos_summarizer",
-  code: "/api/code",
-};
+// const apiEndpoints: apiEndpointsType = {
+//   conversation: "/api/conversation",
+//   image: "/api/image",
+//   video: "/api/video",
+//   Videos_summarizer: "/api/Videos_summarizer",
+//   code: "/api/code",
+// };
 
 const PromptArea = ({
   placeholder,
@@ -102,29 +91,27 @@ const PromptArea = ({
   AIresponses,
   transcriptResponce,
 }: PromptAreaProps) => {
-  const router = useRouter();
   console.log("AIresponses2",AIresponses)
 
-  const [isExpanded, setIsExpanded] = React.useState(false)
   const [formData, setFormData] = useState<FormData>({});
   const [loading, setLoading] = useState<boolean>(false);
   const [videoScript, setVideoScript] = useState<any>();
-  const [audioFileUrl, setAudioFileUrl] = useState<string | undefined>();
-  const [captions, setCaptions] = useState<any>();
-  const [imageList, setImageList] = useState<string[]>([]);
-  const [playVideo, setPlayVideo] = useState<boolean>(true);
-  const [videoId, setVideoId] = useState<number | null>(null);
+  // const [audioFileUrl, setAudioFileUrl] = useState<string | undefined>();
+  // const [captions, setCaptions] = useState<any>();
+  // const [imageList, setImageList] = useState<string[]>([]);
+  // const [playVideo, setPlayVideo] = useState<boolean>(true);
+  // const [videoId, setVideoId] = useState<number | null>(null);
   const [videoUrl, setVideoUrl] = useState('');
 
   // const { videoData, setVideoData } = useContext(VideoDataContext);
   // const { userDetail, setUserDetail } = useContext(VideoDataContext);
-  const { user } = useUser();
+  // const { user } = useUser();
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const largeDeviceClassPicker = () => {
-    if (type === "image") return "lg:col-span-6";
-  };
+  // const largeDeviceClassPicker = () => {
+  //   if (type === "image") return "lg:col-span-6";
+  // };
 
   const onHandleInputChange = (fieldName: string, fieldValue: string) => {
     setFormData((prev) => ({
@@ -180,7 +167,7 @@ const PromptArea = ({
       text: script,
       id: id,
     });
-    setAudioFileUrl(resp.data.result);
+    // setAudioFileUrl(resp.data.result);
     // setVideoData((prev: VideoDataType) => ({
     //   ...prev,
     //   audioFileUrl: resp.data.result,
@@ -195,7 +182,7 @@ const PromptArea = ({
     const resp = await axios.post('http://localhost:3000/api/generate-caption', {
       audioFileUrl: fileUrl,
     });
-    setCaptions(resp.data.result);
+    // setCaptions(resp.data.result);
     // setVideoData((prev: VideoDataType) => ({
     //   ...prev,
     //   captions: resp.data.result,
@@ -220,7 +207,7 @@ const PromptArea = ({
       }
     }
 
-    setImageList(images);
+    // setImageList(images);
     // setVideoData((prev: VideoDataType) => ({
     //   ...prev,
     //   imageList: images,

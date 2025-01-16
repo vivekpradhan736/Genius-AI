@@ -14,12 +14,10 @@ import {
   LayoutDashboard,
   MessageSquare,
   Settings,
-  VideoIcon,
 } from "lucide-react";
 import { LuFileVideo2 } from "react-icons/lu";
 import FreeCounter from "./FreeCounter";
 import { UserButton } from "@clerk/nextjs";
-import { VscFiles } from "react-icons/vsc";
 import { BsFiletypeMp3 } from "react-icons/bs";
 import { BiMoviePlay } from "react-icons/bi";
 import { FaImages } from "react-icons/fa";

@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import Empty from "./Empty";
 import Loader from "./Loader";
 import { cn } from "@/lib/utils";
-import UserAvatar from "./UserAvatar.tsx";
+import UserAvatar from "./UserAvatar";
 import BotAvatar from "./BotAvatar";
 import ReactMarkdown from "react-markdown";
-import { Card, CardContent, CardFooter } from "../ui/card";
+import { Card, CardFooter } from "../ui/card";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { Download } from "lucide-react";
@@ -43,7 +43,7 @@ const ResponseArea = ({
   console.log("transcriptData", transcriptData)
 
   // Reverse the array to display recent messages first
-  const reversedMessages = Array.isArray(promptResponceArr) ? [...promptResponceArr].reverse() : [];
+  // const reversedMessages = Array.isArray(promptResponceArr) ? [...promptResponceArr].reverse() : [];
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60)
@@ -142,12 +142,12 @@ const ResponseArea = ({
                   {type === features.conversation && singleResp.role === "user" && (
                     <ReactMarkdown
                       components={{
-                        pre: ({ node, ...props }) => (
+                        pre: ({ ...props }) => (
                           <div className="overflow-auto w-full my-2 bg-[#e2e5e3b9] p-2 rounded-lg">
                             <pre {...props} />
                           </div>
                         ),
-                        code: ({ node, ...props }) => (
+                        code: ({ ...props }) => (
                           <code
                             className="bg-black/10 rounded-lg p-1"
                             {...props}
@@ -163,12 +163,12 @@ const ResponseArea = ({
                   {type === features.conversation && singleResp.role === "ai" && (
                     <ReactMarkdown
                       components={{
-                        pre: ({ node, ...props }) => (
+                        pre: ({ ...props }) => (
                           <div className="overflow-auto w-full my-2 bg-[#e2e5e3b9] p-2 rounded-lg">
                             <pre {...props} />
                           </div>
                         ),
-                        code: ({ node, ...props }) => (
+                        code: ({ ...props }) => (
                           <code
                             className="bg-black/10 rounded-lg p-1"
                             {...props}
@@ -185,12 +185,12 @@ const ResponseArea = ({
                   {type === features.code && (
                     <ReactMarkdown
                       components={{
-                        pre: ({ node, ...props }) => (
+                        pre: ({ ...props }) => (
                           <div className="overflow-auto w-full my-2 bg-[#e2e5e3b9] p-2 rounded-lg">
                             <pre {...props} />
                           </div>
                         ),
-                        code: ({ node, ...props }) => (
+                        code: ({ ...props }) => (
                           <code
                             className="bg-black/10 rounded-lg p-1"
                             {...props}
@@ -223,7 +223,6 @@ const ResponseArea = ({
                   <Button
                     variant="secondary"
                     className="w-full"
-                    hover
                     onClick={() => handleDownload(src, `image${index + 1}.jpg`)}
                   >
                     <Download className="h-4 w-4 mr-2" />
@@ -275,12 +274,12 @@ const ResponseArea = ({
         <h3 className="text-lg font-medium mb-2">Summary:</h3>
         <ReactMarkdown
           components={{
-            pre: ({ node, ...props }) => (
+            pre: ({ ...props }) => (
               <div className="overflow-auto w-full my-2 bg-gray-100 p-2 rounded-lg">
                 <pre {...props} />
               </div>
             ),
-            code: ({ node, ...props }) => (
+            code: ({ ...props }) => (
               <code className="bg-gray-200 rounded-lg p-1" {...props} />
             ),
           }}

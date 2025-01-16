@@ -18,7 +18,7 @@ const SubscriptionButton = ({isPro = false}: SubscriptionButtonProps) => {
             const response = await axios.get('/api/stripe');
 
             window.location.href = response.data.url;
-        } catch (error) {
+        } catch {
             toast.error("BILLING_ERROR")
         } finally {
             setLoading(false);

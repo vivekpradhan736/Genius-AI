@@ -134,7 +134,7 @@ export default function Dropzone() {
     }));
     setActions(tmp_actions);
     setIsConverting(true);
-    for (let action of tmp_actions) {
+    for (const action of tmp_actions) {
       try {
         const { url, output } = await convertFile(ffmpegRef.current, action);
         tmp_actions = tmp_actions.map((elt) =>
@@ -149,7 +149,7 @@ export default function Dropzone() {
             : elt
         );
         setActions(tmp_actions);
-      } catch (err) {
+      } catch {
         tmp_actions = tmp_actions.map((elt) =>
           elt === action
             ? {
@@ -171,7 +171,6 @@ export default function Dropzone() {
     setFiles(data);
     const tmp: Action[] = [];
     data.forEach((file: any) => {
-      const formData = new FormData();
       tmp.push({
         file_name: file.name,
         file_size: file.size,
