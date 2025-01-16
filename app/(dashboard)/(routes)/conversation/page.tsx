@@ -26,6 +26,13 @@ type ChatCompletionRequestMessage = {
   content: string;
 };
 
+type Conversation = {
+  id: string;
+  conversationName: string;
+  messages: ChatCompletionRequestMessage[];
+  createdAt: string;
+};
+
 const ConversationPage = () => {
   const { userId } = useAuth();
   const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
