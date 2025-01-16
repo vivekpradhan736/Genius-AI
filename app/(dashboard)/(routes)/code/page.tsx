@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Heading from "@/components/myComps/Heading";
 import { Code } from "lucide-react";
 import PromptArea from "@/components/myComps/PromptArea";
-import { ChatCompletionRequestMessage } from "openai";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { AxiosError } from "axios";
@@ -17,9 +16,7 @@ import { useProModal } from "@/hooks/use-pro-modal";
 
 
 const CodePage = () => {
-  const [messages, setMessages] = useState(
-    [] as ChatCompletionRequestMessage[]
-  );
+  const [messages, setMessages] = useState([] as { role: string; content: string }[]);
   const router = useRouter();
   const proModal = useProModal();
 
@@ -38,7 +35,7 @@ const CodePage = () => {
     );
     console.log(values);
     try {
-      const userMessage: ChatCompletionRequestMessage = {
+      const userMessage = {
         role: "user",
         content: values.prompt,
       };
