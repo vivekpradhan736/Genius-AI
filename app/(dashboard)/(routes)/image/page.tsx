@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import { ImageIcon } from "lucide-react";
 import Heading from "@/components/myComps/Heading";
 import PromptArea from "@/components/myComps/PromptArea";
-import { resolutionOptions, amountOptions, formSchema } from "./formSchema";
+import { formSchema } from "./formSchema";
 import { toast } from "react-hot-toast";
 import { useProModal } from "@/hooks/use-pro-modal";
 
@@ -44,12 +44,16 @@ const ImagePage = () => {
       setImages(urls);
 
       form.reset();
-    } catch (error: any) {
-      if(error?.response?.status === 403){
-        proModal.onOpen()
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 403) {
+          proModal.onOpen();
+        }
+        console.error("⛔ [API_IMAGE_ERROR]: ", error.response?.data || error.message);
+        toast.error("Something went wrong");
+      } else {
+        console.error("Unexpected error:", error);
       }
-      console.log("⛔ [API_CONVERSATION_ERROR]: ", error);
-      toast.error("Something went wrong");
     } finally {
       router.refresh();
     }

@@ -31,7 +31,6 @@ import loadFfmpeg from "@/lib/load-ffmpeg";
 import { FFmpeg } from "@ffmpeg/ffmpeg";
 import { Action } from "@/types";
 import { Card } from "@/components/ui/card"
-import { FileUp, HelpCircle, Menu } from "lucide-react"
 import Link from "next/link";
 import Image from "next/image";
 

@@ -23,6 +23,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/convertWordToPdf/route.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/convertWordToPdf/route.js", "app/api/video_summarizer/route.js", "app/api/video_transcript/route.js"],
   "exclude": ["node_modules"]
 }

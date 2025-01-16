@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { Download, Sun, Plus } from "lucide-react"
-import { cn } from '@/lib/utils'
+import { Plus } from "lucide-react"
 import Link from "next/link"
 import { Skeleton } from "@/components/ui/skeleton"
 
@@ -15,13 +14,12 @@ export default function ImageUpload() {
   const [loading, setLoading] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [dragActive, setDragActive] = useState(false)
-  const [count, setCount] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null); // Ref to hold the interval
   const [position, setPosition] = useState<number>(0);
 
-  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPosition(Number(e.target.value));
-  };
+  // const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setPosition(Number(e.target.value));
+  // };
 
   // Function to increment the counter
   const incrementCount = () => {
@@ -90,7 +88,8 @@ export default function ImageUpload() {
     }
   };
 
-  const removeBackground = async () => {
+  // Remove background using API
+  const removeBackground = useCallback(async () => {
     if (!image) return;
     setLoading(true);
 
@@ -116,11 +115,10 @@ export default function ImageUpload() {
     } catch (error) {
       console.error("Error removing background:", error);
     } finally {
-        setPosition(100)
       setLoading(false);
       intervalRef.current = setInterval(decrementCount, 50);
     }
-  };
+  }, [image]);
 
   const handleChange = () => {
     const openFileField = localStorage.getItem('openFileField');
@@ -145,7 +143,7 @@ export default function ImageUpload() {
     if (image) {
         removeBackground();
       }
-  }, [image]);
+  }, [image, removeBackground]);
 
   return (
     <div>
@@ -198,11 +196,13 @@ export default function ImageUpload() {
                   key={index}
                   className="aspect-square rounded-xl overflow-hidden hover:opacity-80 transition-opacity"
                 >
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    className="w-full h-full object-cover"
-                  />
+                  <Image
+                  src={image.src}
+                  alt={image.alt}
+                  width={300}
+                  height={300}
+                  className="w-full h-full object-cover"
+                />
                 </button>
               ))}
             </div>
@@ -252,11 +252,13 @@ export default function ImageUpload() {
 
         {/* Processed Image */}
         <div className="absolute inset-0">
-          <img
-            src={resultImage}
-            alt="Processed"
-            className="w-full h-full object-cover object-left"
-          />
+          <Image
+                  src={resultImage}
+                  alt="Processed"
+                  width={300}
+                  height={300}
+                  className="w-full h-full object-cover object-left"
+                />
         </div>
 
         {/* Invisible Range Input for Slider */}
@@ -282,19 +284,19 @@ export default function ImageUpload() {
                 />
                 <div className="absolute inset-0 flex flex-col gap-6">
                     <div className='flex gap-24'>
-                    <img src="/star_loader.gif" alt="Loading animation" className='w-14 h-14' />
-                <img src="/star_loader.gif" alt="Loading animation" className='w-28 h-24' />
-                <img src="/star_loader.gif" alt="Loading animation" className='w-20 h-20' />
+                    <Image width={300} height={300} src="/star_loader.gif" alt="Loading animation" className='w-14 h-14'/>
+                <Image width={300} height={300} src="/star_loader.gif" alt="Loading animation" className='w-28 h-24' />
+                <Image width={300} height={300} src="/star_loader.gif" alt="Loading animation" className='w-20 h-20' />
                     </div>
                     <div className='flex gap-24'>
-                <img src="/star_loader.gif" alt="Loading animation" className='w-28 h-24' />
-                    <img src="/star_loader.gif" alt="Loading animation" className='w-12 h-12' />
-                <img src="/star_loader.gif" alt="Loading animation" className='w-28 h-24' />
+                <Image width={300} height={300} src="/star_loader.gif" alt="Loading animation" className='w-28 h-24' />
+                    <Image width={300} height={300} src="/star_loader.gif" alt="Loading animation" className='w-12 h-12' />
+                <Image width={300} height={300} src="/star_loader.gif" alt="Loading animation" className='w-28 h-24' />
                     </div>
                     <div className='flex gap-24'>
-                    <img src="/star_loader.gif" alt="Loading animation" className='w-10 h-10' />
-                <img src="/star_loader.gif" alt="Loading animation" className='w-28 h-24' />
-                <img src="/star_loader.gif" alt="Loading animation" className='w-16 h-16' />
+                    <Image width={300} height={300} src="/star_loader.gif" alt="Loading animation" className='w-10 h-10' />
+                <Image width={300} height={300} src="/star_loader.gif" alt="Loading animation" className='w-28 h-24' />
+                <Image width={300} height={300} src="/star_loader.gif" alt="Loading animation" className='w-16 h-16' />
                     </div>
             </div>
             </>

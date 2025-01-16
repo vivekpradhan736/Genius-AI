@@ -1,5 +1,3 @@
-import { TextToAudioOutput, TextToAudioInput } from '../../../node_modules/@huggingface/tasks/dist/src/tasks/text-to-audio/inference';
-import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import fetch from 'node-fetch';
 import puppeteer from 'puppeteer';
@@ -9,12 +7,8 @@ import xml2js from 'xml2js';
 import { increaseApiLimit, checkApiLimit } from "@/lib/api-limit";
 import { checkSubscription } from '@/lib/subscription';
 
-// Extend the Window interface to include ytInitialPlayerResponse
-declare global {
-  interface Window {
-    ytInitialPlayerResponse: any;
-  }
-}
+// Extend the global object to include ytInitialPlayerResponse
+global.ytInitialPlayerResponse = null;
 
 const model = new ChatGoogleGenerativeAI({
   model: "gemini-pro",
@@ -22,7 +16,7 @@ const model = new ChatGoogleGenerativeAI({
   maxOutputTokens: 2048
 });
 
-async function getYouTubeTranscript(videoUrl: string): Promise<string> {
+async function getYouTubeTranscript(videoUrl) {
   try {
     const browser = await puppeteer.launch({
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
@@ -41,7 +35,7 @@ async function getYouTubeTranscript(videoUrl: string): Promise<string> {
         throw new Error('No captions available for this video.');
       }
 
-      const selectedTrack = captionTracks.find((track: any) => track.kind === 'asr') || captionTracks[0];
+      const selectedTrack = captionTracks.find((track) => track.kind === 'asr') || captionTracks[0];
       return selectedTrack.baseUrl;
     });
 
@@ -53,7 +47,7 @@ async function getYouTubeTranscript(videoUrl: string): Promise<string> {
     console.log("Fetched transcript XML data");
 
     let transcript = '';
-    await xml2js.parseString(xmlData, { explicitArray: false }, (err: any, result: any) => {
+    await xml2js.parseString(xmlData, { explicitArray: false }, (err, result) => {
       if (err) {
         console.error("Error parsing XML:", err.message);
         throw new Error('Error parsing XML: ' + err.message);
@@ -68,13 +62,13 @@ async function getYouTubeTranscript(videoUrl: string): Promise<string> {
     });
 
     return transcript;
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error in getYouTubeTranscript:", error.message);
     throw error;
   }
 }
 
-async function summarizeVideo(videoUrl: string): Promise<any> {
+async function summarizeVideo(videoUrl) {
   try {
     console.log("Starting summarization process...");
     const transcript = await getYouTubeTranscript(videoUrl);
@@ -84,13 +78,13 @@ async function summarizeVideo(videoUrl: string): Promise<any> {
     console.log("Generated summary: ", summary);
 
     return summary;
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error during summarization:", error.message);
     throw new Error(`Summarization failed: ${error.message}`);
   }
 }
 
-export async function POST(req: Request) {
+export async function POST(req) {
   try {
     const body = await req.json();
     const { prompt } = body;
@@ -102,20 +96,20 @@ export async function POST(req: Request) {
     const freeTrial = await checkApiLimit();
     const isPro = await checkSubscription();
 
-    if(!freeTrial && !isPro){
-      return new NextResponse("Free trial has expired.", { status: 403})
+    if (!freeTrial && !isPro) {
+      return new NextResponse("Free trial has expired.", { status: 403 });
     }
 
     const summaryResponse = await summarizeVideo(prompt);
     const summary = summaryResponse;
 
-    if(!isPro){
+    if (!isPro) {
       await increaseApiLimit();
     }
 
     return NextResponse.json(summary);
-  } catch (error: any) {
-    console.error("❌ (route.ts) [API_VIDEO_SUMMARY_ERROR]: ", error);
+  } catch (error) {
+    console.error("❌ (route.js) [API_VIDEO_SUMMARY_ERROR]: ", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

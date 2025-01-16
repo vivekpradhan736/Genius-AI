@@ -5,7 +5,6 @@ import Link from "next/link";
 import React from "react";
 import TypewriterComponent from "typewriter-effect";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 
 const LandingHero = () => {
   const { isSignedIn } = useAuth();

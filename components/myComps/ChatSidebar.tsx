@@ -5,52 +5,64 @@ import { Bot, Grid, MoreHorizontal, SquarePen } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { format, isToday, isYesterday, isWithinInterval, startOfToday, subDays } from "date-fns";
 
-interface PromptAreaProps {
-  allConversation: any; // You may want to define a proper type here
+// Type for a single conversation
+interface Conversation {
+  id: string;
+  conversationName: string;
+  createdAt: string; // Use Date if already converted
+}
+
+// Props for ChatSidebar
+interface ChatSidebarProps {
+  allConversation: Conversation[];
   allConversationLoading: boolean;
-  createConversation: any;
+  createConversation: () => void;
   chatId: string;
 }
 
-export default function ChatSidebar({ allConversation, allConversationLoading, createConversation, chatId }: PromptAreaProps) {
+export default function ChatSidebar({
+  allConversation,
+  allConversationLoading,
+  createConversation,
+  chatId,
+}: ChatSidebarProps) {
   const router = useRouter();
 
   // Function to format dates
   const getDateLabel = (date: Date) => {
     const today = startOfToday();
-    
+
     if (isToday(date)) return "Today";
     if (isYesterday(date)) return "Yesterday";
-    
-    // Check if the date is within the last 7 days
+
     if (isWithinInterval(date, { start: subDays(today, 7), end: today })) {
       return "Previous 7 Days";
     }
 
-    // Check if the date is within the last 30 days
     if (isWithinInterval(date, { start: subDays(today, 30), end: today })) {
       return "Previous 30 Days";
     }
 
-    // Check if the date is in the last month
     if (date.getMonth() === today.getMonth() - 1 || (today.getMonth() === 0 && date.getMonth() === 11)) {
       return "Last Month";
     }
 
-    // Default to formatted date for older conversations
     return format(date, "MMM dd, yyyy");
   };
 
   // Ensure allConversation is an array before reducing
-  const conversationsArray = Array.isArray(allConversation) ? allConversation : [];
+const conversationsArray = Array.isArray(allConversation) ? allConversation : [];
 
-  // Group conversations by their creation date
-  const groupedConversations = conversationsArray.reduce((groups: any, conversation: any) => {
+// Group conversations by their creation date
+const groupedConversations = conversationsArray.reduce<Record<string, Conversation[]>>(
+  (groups, conversation) => {
     const dateLabel = getDateLabel(new Date(conversation.createdAt));
     if (!groups[dateLabel]) groups[dateLabel] = [];
     groups[dateLabel].push(conversation);
     return groups;
-  }, {});
+  },
+  {}
+);
 
   return (
     <div className="w-64 h-[94vh] bg-white text-black font-medium p-4 flex flex-col border-l-2">
@@ -65,15 +77,19 @@ export default function ChatSidebar({ allConversation, allConversationLoading, c
       <ScrollArea className="flex-grow">
         <div className="space-y-4">
           <SidebarSection title="Pinned">
-            <button title="New Chat" onClick={createConversation} className="flex justify-between items-center w-full group px-2 py-1 text-sm rounded hover:bg-gray-200 transition-colors">
+            <button
+              title="New Chat"
+              onClick={createConversation}
+              className="flex justify-between items-center w-full group px-2 py-1 text-sm rounded hover:bg-gray-200 transition-colors"
+            >
               <div className="flex">
-                <span className="mr-3"><Bot className="h-5 w-5" /></span>
+                <span className="mr-3">
+                  <Bot className="h-5 w-5" />
+                </span>
                 <span className="truncate">Genius - AI</span>
               </div>
-              <span
-                className={`mr-3 text-gray-600 hidden group-hover:block hover:text-black `}
-              >
-                 <SquarePen className="h-5 w-5 stroke-[2px]" />
+              <span className="mr-3 text-gray-600 hidden group-hover:block hover:text-black">
+                <SquarePen className="h-5 w-5 stroke-[2px]" />
               </span>
             </button>
             <SidebarItem icon={<Grid className="h-5 w-5" />} label="Explore More Model" />
@@ -86,7 +102,7 @@ export default function ChatSidebar({ allConversation, allConversationLoading, c
           ) : (
             Object.keys(groupedConversations).map((dateLabel) => (
               <SidebarSection title={dateLabel} key={dateLabel}>
-                {groupedConversations[dateLabel].map((conv: any) => (
+                {groupedConversations[dateLabel].map((conv) => (
                   <button
                     className={`flex items-center justify-between w-full group px-2 py-1 text-sm rounded hover:bg-gray-200 transition-colors ${
                       chatId === conv.id ? "bg-gray-200" : ""

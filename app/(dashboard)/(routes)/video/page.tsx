@@ -42,11 +42,15 @@ const VideoPage = () => {
 
       setVideo(responce.data.data.video.url);
       form.reset();
-    } catch (error: any) {
-      if(error?.response?.status === 403){
-        proModal.onOpen()
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 403) {
+          proModal.onOpen();
+        }
+        console.error("⛔ [API_VIDEO_ERROR]: ", error.response?.data || error.message);
+      } else {
+        console.error("Unexpected error:", error);
       }
-      console.log("⛔ [API_VIDEO_ERROR]: ", error);
     } finally {
       router.refresh();
     }

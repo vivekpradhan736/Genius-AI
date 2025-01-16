@@ -1,21 +1,26 @@
-import { getAuth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 import { increaseApiLimit, checkApiLimit } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
 
-const firstMessage = {
-  role: "user",
-  content: "Please provide a code snippet in JavaScript that fetches data from an API and logs it to the console.",
-};
+// const firstMessage = {
+//   role: "user",
+//   content: "Please provide a code snippet in JavaScript that fetches data from an API and logs it to the console.",
+// };
+
+// Define a type for the messages
+interface Message {
+  role: string;
+  content: string;
+}
 
 const genAI = new GoogleGenerativeAI("AIzaSyB0OTIRRkEN6Uy2vtSzGHplx9WrOAnMqOk");
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { messages }: { messages: Array<any> } = body;
+    const { messages }: { messages: Message[] } = body;
 
     if (!messages) {
       return new NextResponse("Messages are required!", { status: 400 });

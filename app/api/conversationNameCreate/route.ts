@@ -1,4 +1,3 @@
-import { getAuth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import prisma from "@/lib/prismadb";

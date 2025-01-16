@@ -1,19 +1,20 @@
-// app/api/excelToPdf/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import * as XLSX from 'xlsx';
 import puppeteer from 'puppeteer';
-import formidable, { File } from 'formidable';
+import formidable, { File, Fields, Files } from 'formidable';
 import fs from 'fs';
 import { promisify } from 'util';
 
 const unlinkFile = promisify(fs.unlink);
 
 // Helper function to parse form data in the app route
-async function parseForm(req: NextRequest): Promise<{ fields: formidable.Fields, files: formidable.Files }> {
+async function parseForm(req: NextRequest): Promise<{ fields: Fields; files: Files }> {
   const form = new formidable.IncomingForm();
   const reqBody = await req.blob();
+
+  // Explicitly typing the stream as ReadableStream
   return new Promise((resolve, reject) => {
-    form.parse(reqBody.stream() as any, (err, fields, files) => {
+    form.parse(reqBody.stream() as unknown as NodeJS.ReadableStream, (err, fields, files) => {
       if (err) reject(err);
       else resolve({ fields, files });
     });
@@ -22,7 +23,7 @@ async function parseForm(req: NextRequest): Promise<{ fields: formidable.Fields,
 
 export async function POST(req: NextRequest) {
   try {
-    const { fields, files } = await parseForm(req);
+    const { files } = await parseForm(req);
     const file = files.file as File;
     const filePath = file.filepath;
 

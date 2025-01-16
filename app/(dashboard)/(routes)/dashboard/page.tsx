@@ -8,13 +8,11 @@ import {
   ArrowRight,
   Code,
   ImageIcon,
-  MessageSquare,
-  VideoIcon,
+  MessageSquare
 } from "lucide-react";
 import { LuFileVideo2 } from "react-icons/lu";
-import { useUser } from '@clerk/nextjs'
-import { useEffect } from "react";
-import { VscFiles } from "react-icons/vsc";
+import { useUser } from "@clerk/nextjs";
+import { useEffect, useCallback } from "react";
 import { BsFiletypeMp3 } from "react-icons/bs";
 import { BiMoviePlay } from "react-icons/bi";
 import { FaImages } from "react-icons/fa";
@@ -49,20 +47,6 @@ const tools = [
     bgColor: "bg-emerald-500/10",
     href: "/Videos_summarizer",
   },
-  // {
-  //   label: "Video Generation",
-  //   icon: VideoIcon,
-  //   color: "text-orange-700",
-  //   bgColor: "bg-orange-700/10",
-  //   href: "/video",
-  // },
-  // {
-  //   label: "File Converter",
-  //   icon: VscFiles,
-  //   href: "/file_con",
-  //   color: "text-yellow-400",
-  //   bgColor: "bg-yellow-400/20",
-  // },
   {
     label: "Background Remover",
     icon: PiSelectionBackgroundBold,
@@ -92,19 +76,12 @@ const tools = [
     bgColor: "bg-sky-500/20",
   },
 ];
+
 export default function DashboardPage() {
   const router = useRouter();
-  const { user } = useUser()
-  console.log("user", user)
+  const { user } = useUser();
 
-  useEffect(() => {
-    if(user){
-      isNewUser();
-    }
-  }, [user])
-  
-
-  const isNewUser = async () => {
+  const isNewUser = useCallback(async () => {
     try {
       const response = await fetch("http://localhost:3000/api/createNewUser", {
         method: "POST",
@@ -125,7 +102,14 @@ export default function DashboardPage() {
     } catch (error) {
       console.error("Error adding new user:", error);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      isNewUser();
+    }
+  }, [user, isNewUser]);
+
   return (
     <div>
       <div className="not-mobile mt-8 mb-8 space-y-4">

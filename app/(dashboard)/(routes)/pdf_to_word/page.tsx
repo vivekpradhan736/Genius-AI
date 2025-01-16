@@ -3,20 +3,11 @@
 import axios from 'axios';
 import { useRef, useState } from 'react';
 import { Card } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Upload, Download, File, X, AlertCircle, MoreHorizontal } from "lucide-react"
+import { Upload, File, X, AlertCircle } from "lucide-react"
 import Heading from '@/components/myComps/Heading';
 import { VscFiles } from "react-icons/vsc";
-import Image from "next/image"
-
-interface Tool {
-  id: string
-  name: string
-  description: string
-  icon: string
-}
 
 interface FileItem {
   id: string
@@ -162,45 +153,6 @@ const PdfToWordCon = () => {
         return { text: 'Error', color: 'text-red-600 bg-red-100' }
     }
   }
-
-  const tools: Tool[] = [
-    {
-        id: "word-to-excel",
-        name: "Word to Excel",
-        description: "Convert any Word file to Excel instantly",
-        icon: "/placeholder.svg"
-      },
-      {
-        id: "png-to-pdf",
-        name: "PNG to PDF",
-        description: "Convert any PNG file to PDF instantly",
-        icon: "/placeholder.svg"
-      },
-      {
-        id: "word-to-pdf",
-        name: "Word to PDF",
-        description: "Convert any Word file to PDF instantly",
-        icon: "/placeholder.svg"
-      },
-      {
-        id: "ai-to-svg",
-        name: "AI to SVG",
-        description: "Convert any AI file to SVG instantly",
-        icon: "/placeholder.svg"
-      },
-      {
-        id: "png-to-svg",
-        name: "PNG to SVG",
-        description: "Convert any PNG file to SVG instantly",
-        icon: "/placeholder.svg"
-      },
-      {
-        id: "excel-to-pdf",
-        name: "Excel to PDF",
-        description: "Convert any Excel file to PDF instantly",
-        icon: "/placeholder.svg"
-      },
-  ]
 
   return (
     <main className="lg:ml-[240px] flex flex-col xl:flex-row w-full lg:w-[80%] max-w-[84vw] mx-auto px-4 lg:py-4 gap-6">

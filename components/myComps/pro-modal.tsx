@@ -9,7 +9,6 @@ import {
     Code,
     ImageIcon,
     MessageSquare,
-    VideoIcon,
     Zap,
   } from "lucide-react";
   import { LuFileVideo2 } from "react-icons/lu";

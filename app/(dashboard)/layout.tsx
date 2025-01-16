@@ -4,7 +4,6 @@ import React from "react";
 import { reactChildrenForProps } from "@/commonTypes";
 import Navbar from "@/components/myComps/Navbar";
 import Sidebar from "@/components/myComps/Sidebar";
-import UserInfo from "@/components/myComps/UserInfo";
 import { getApiLimitCount } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
 

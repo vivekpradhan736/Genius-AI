@@ -258,7 +258,7 @@ const ResponseArea = ({
               Transcript
             </div>
           </div>
-          {transcriptData.data.map((entry: any, index: any) => (
+          {transcriptData?.map((entry: any, index: any) => (
             <div key={index} className="mb-4 flex px-4">
               <div className="text-blue-500 w-12 flex-shrink-0 font-mono">
                 {formatTime(entry.intervalStart)}

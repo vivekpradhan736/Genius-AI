@@ -1,21 +1,20 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, useAnimation, AnimatePresence } from 'framer-motion'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
-import { ArrowRight, Upload, ChevronLeft, ChevronRight } from "lucide-react"
+import { ArrowRight, Upload } from "lucide-react"
 import { useRouter } from "next/navigation";
-const { div: MotionDiv, img: MotionImg } = motion;
+import Image from 'next/image'
 
 const MotionButton = motion(Button)
 
 export default function Component() {
     const router = useRouter();
   const [activeTab, setActiveTab] = useState('people')
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [isDragging, setIsDragging] = useState(false)
+  // const [isDragging, setIsDragging] = useState(false)
   const [position, setPosition] = useState<number>(50);
 
   const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,17 +25,17 @@ export default function Component() {
 
   const handleDragEnter = (e: React.DragEvent) => {
     e.preventDefault()
-    setIsDragging(true)
+    // setIsDragging(true)
   }
 
   const handleDragLeave = (e: React.DragEvent) => {
     e.preventDefault()
-    setIsDragging(false)
+    // setIsDragging(false)
   }
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault()
-    setIsDragging(false)
+    // setIsDragging(false)
     // Handle file drop logic here
   }
 
@@ -222,11 +221,12 @@ export default function Component() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    className="w-full h-full object-cover"
-                  />
+                <Image
+                width={800} height={600}
+                src={image.src}
+                alt={image.alt}
+                  className="w-full h-full object-cover"
+                />
                 </motion.button>
               ))}
             </div>
@@ -275,7 +275,8 @@ export default function Component() {
                       <div className="relative aspect-video">
   <div className="relative object-cover aspect-video overflow-hidden rounded-lg">
   <div className="absolute inset-0">
-      <img
+      <Image
+        width={800} height={600}
         src="/background.jpg"
         alt="Processed"
         className="w-full h-full object-cover blur-sm"
@@ -288,7 +289,8 @@ export default function Component() {
         clipPath: `inset(0 ${100 - position}% 0 0)`, // Clip the image based on slider position
       }}
     >
-      <img
+      <Image
+        width={800} height={600}
         src={category.image}
         alt="Original"
         className="w-full h-full object-cover"
@@ -297,7 +299,8 @@ export default function Component() {
 
     {/* Processed Image */}
     <div className="absolute inset-0">
-      <img
+      <Image
+        width={800} height={600}
         src={category.processImage}
         alt="Processed"
         className="w-full h-full object-cover"
@@ -525,7 +528,7 @@ export default function Component() {
         id: 4,
         name: "Endless possibilities",
         image: "/people-endless-possibilities.jpg?height=400&width=600"
-    },].map((title, index) => (
+    },].map((title) => (
               <motion.div
                 key={title.id}
                 variants={itemVariants}
