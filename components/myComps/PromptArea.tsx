@@ -45,7 +45,7 @@ interface PromptAreaProps {
   isLoading: boolean;
   form: any;
   AIresponses: SimpleMessage[] | string[] | string;
-  transcriptResponce: any;
+  transcriptResponce?: any;
 }
 
 // interface VideoDataType {
