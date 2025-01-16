@@ -29,6 +29,7 @@ interface Conversation {
   id: string;
   conversationName: string;
   messages: SimpleMessage[];
+  createdAt: string;
 }
 
 const ConversationSinglePage = ({ params }: { params: { id: string } }) => {
