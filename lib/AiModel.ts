@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI, GenerativeModel, HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
+import { GoogleGenerativeAI, GenerativeModel } from '@google/generative-ai';
   
 const apiKey: string | undefined = process.env.GEMINI_API_KEY;
 if (!apiKey) throw new Error("API key is missing.");

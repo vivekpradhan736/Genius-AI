@@ -7,7 +7,7 @@ import { MdClose } from "react-icons/md";
 import ReactDropzone from "react-dropzone";
 import bytesToSize from "@/lib/bytes-to-size";
 import fileToIcon from "@/lib/file-to-icon";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 // import { useToast } from "@/components/hooks/use-toast"
 import { useToast } from "@/hooks/use-toast";
 import compressFileName from "@/lib/compress-file-name";
@@ -111,7 +111,9 @@ export default function Dropzone() {
   };
   const downloadAll = (): void => {
     for (const action of actions) {
-      !action.is_error && download(action);
+      if (!action.is_error) {
+        download(action);
+    }
     }
   };
   const download = (action: Action) => {
@@ -202,13 +204,13 @@ export default function Dropzone() {
       })
     );
   };
-  const checkIsReady = (): void => {
+  const checkIsReady = useCallback(() => {
     let tmp_is_ready = true;
     actions.forEach((action: Action) => {
-      if (!action.to) tmp_is_ready = false;
+        if (!action.to) tmp_is_ready = false;
     });
     setIsReady(tmp_is_ready);
-  };
+}, [actions]);
   const deleteAction = (action: Action): void => {
     setActions(actions.filter((elt) => elt !== action));
     setFiles(files.filter((elt) => elt.name !== action.file_name));
@@ -220,7 +222,7 @@ export default function Dropzone() {
       setIsReady(false);
       setIsConverting(false);
     } else checkIsReady();
-  }, [actions]);
+  }, [actions, checkIsReady]);
   useEffect(() => {
     load();
   }, []);

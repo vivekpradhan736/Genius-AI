@@ -4,7 +4,6 @@ import {
     BsFileEarmarkTextFill,
     BsFillCameraVideoFill,
   } from 'react-icons/bs';
-  import { FaFileAudio } from 'react-icons/fa';
   import { AiFillFile } from 'react-icons/ai';
   import { PiSpeakerSimpleHighFill } from 'react-icons/pi';
   
