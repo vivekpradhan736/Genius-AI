@@ -30,7 +30,7 @@ const ConversationPage = () => {
   const { userId } = useAuth();
   const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
   const [allConversationLoading, setAllConversationLoading] = useState(false);
-  const [allConversation, setAllConversation] = useState("");
+  const [allConversation, setAllConversation] = useState<Conversation[]>([]);
   const [currentConversation, setCurrentConversation] = useState<{
     id?: string;
     conversationName?: string;
@@ -136,7 +136,7 @@ const ConversationPage = () => {
       setAllConversationLoading(true);
       const response = await axios.get("/api/conversationAllFind");
       if (response.status === 200 && response.data.conversations.length > 0) {
-        setAllConversation(response.data.conversations);
+        setAllConversation(response.data.conversations); // Set the correct array of conversations
       } else {
         console.error("No conversations found");
       }

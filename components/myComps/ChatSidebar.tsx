@@ -17,7 +17,7 @@ interface ChatSidebarProps {
   allConversation: Conversation[];
   allConversationLoading: boolean;
   createConversation: () => void;
-  chatId: string;
+  chatId?: string;
 }
 
 export default function ChatSidebar({
