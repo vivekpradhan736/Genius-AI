@@ -40,8 +40,8 @@ const LandingHero = () => {
       <div>
         <Link href={isSignedIn ? "/dashboard" : "/sign-up"}>
           <Button
-            variant="hero"
-            size="superLg"
+            variant="default"
+            size="default"
             className="text-xl sm:text-2xl md:text-3xl lg:text-4xl try-out-btn"
           >
             Give it a try!
