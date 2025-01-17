@@ -4,23 +4,15 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { increaseApiLimit, checkApiLimit } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
 
-// const firstMessage = {
-//   role: "user",
-//   content: "Please provide a code snippet in JavaScript that fetches data from an API and logs it to the console.",
-// };
-
 // Define a type for the messages
-interface Message {
-  role: string;
-  content: string;
-}
+// In JavaScript, you don't need to define the type explicitly
 
-const genAI = new GoogleGenerativeAI("AIzaSyB0OTIRRkEN6Uy2vtSzGHplx9WrOAnMqOk");
+const genAI = new GoogleGenerativeAI("AIzaSyCSDGHe_Lcceu5j_Ukvcwg117rJSutotQY");
 
-export async function POST(req: Request) {
+export async function POST(req) {
   try {
     const body = await req.json();
-    const { messages }: { messages: Message[] } = body;
+    const { messages } = body;
 
     if (!messages) {
       return new NextResponse("Messages are required!", { status: 400 });
@@ -29,8 +21,8 @@ export async function POST(req: Request) {
     const freeTrial = await checkApiLimit();
     const isPro = await checkSubscription();
 
-    if(!freeTrial && !isPro){
-      return new NextResponse("Free trial has expired.", { status: 403})
+    if (!freeTrial && !isPro) {
+      return new NextResponse("Free trial has expired.", { status: 403 });
     }
 
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
@@ -39,13 +31,13 @@ export async function POST(req: Request) {
     const response = result?.response;
     const text = response?.text();
 
-    if(!isPro){
+    if (!isPro) {
       await increaseApiLimit();
     }
 
-    return NextResponse.json( text ); // Return the generated code
+    return NextResponse.json(text); // Return the generated code
   } catch (error) {
-    console.error("❌ (route.ts) [API_CONVERSATION_ERROR]: ", error);
+    console.error("❌ (route.js) [API_CONVERSATION_ERROR]: ", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

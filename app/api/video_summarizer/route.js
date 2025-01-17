@@ -12,7 +12,7 @@ global.ytInitialPlayerResponse = null;
 
 const model = new ChatGoogleGenerativeAI({
   model: "gemini-pro",
-  apiKey: "AIzaSyAw7krgqhCQ8tjqBghEH6x8AQafuaojOqA",
+  apiKey: "AIzaSyCSDGHe_Lcceu5j_Ukvcwg117rJSutotQY",
   maxOutputTokens: 2048
 });
 

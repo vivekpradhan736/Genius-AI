@@ -5,7 +5,7 @@ import prisma from "@/lib/prismadb";
 import { increaseApiLimit, checkApiLimit } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
 
-const genAI = new GoogleGenerativeAI("AIzaSyB0OTIRRkEN6Uy2vtSzGHplx9WrOAnMqOk");
+const genAI = new GoogleGenerativeAI("AIzaSyCSDGHe_Lcceu5j_Ukvcwg117rJSutotQY");
 
 export async function POST(req: Request) {
   try {

@@ -116,7 +116,7 @@ const ConversationPage = () => {
 
   const createConversation = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/api/conversationCreate", {
+      const response = await axios.post("/api/conversationCreate", {
         userId,
       });
       if (response.status === 201 && response.data.conversation) {

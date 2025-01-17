@@ -10,21 +10,15 @@ import { checkSubscription } from "@/lib/subscription";
 //   content: "Please provide all your responses in markdown format.",
 // };
 
-// Define a type for the messages
-interface Message {
-  role: string;
-  content: string;
-}
+const genAI = new GoogleGenerativeAI("AIzaSyCSDGHe_Lcceu5j_Ukvcwg117rJSutotQY");
 
-const genAI = new GoogleGenerativeAI("AIzaSyB0OTIRRkEN6Uy2vtSzGHplx9WrOAnMqOk");
-
-export async function POST(req: Request) {
+export async function POST(req) {
   try {
     // const { userId } = getAuth(req);
     const body = await req.json();
     console.log("🧪 2. The body: ", body);
 
-    const { messages }: { messages: Message[] } = body;
+    const { messages } = body;
     // messages = [firstMessage, ...messages];
     console.log("🧪 3. The Messages: ", messages);
 
@@ -35,22 +29,22 @@ export async function POST(req: Request) {
     const freeTrial = await checkApiLimit();
     const isPro = await checkSubscription();
 
-    if(!freeTrial && !isPro){
-      return new NextResponse("Free trial has expired.", { status: 403})
+    if (!freeTrial && !isPro) {
+      return new NextResponse("Free trial has expired.", { status: 403 });
     }
 
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-      const result = await model.generateContent( messages );
-      const response = result?.response;
-      const text = response?.text();
+    const result = await model.generateContent(messages);
+    const response = result?.response;
+    const text = response?.text();
 
-      if(!isPro) {
-        await increaseApiLimit();
-      }
-      
-      return NextResponse.json( text );
+    if (!isPro) {
+      await increaseApiLimit();
+    }
+
+    return NextResponse.json(text);
   } catch (error) {
-    console.error("❌ (route.ts) [API_CONVERSATION_ERROR]: ", error);
+    console.error("❌ (route.js) [API_CONVERSATION_ERROR]: ", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
