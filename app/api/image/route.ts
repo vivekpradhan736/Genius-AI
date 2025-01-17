@@ -8,8 +8,9 @@ fal.config({
   credentials: process.env.FAL_KEY,
 });
 
+// Update FalResult to match the actual structure returned by fal.subscribe
 interface FalResult {
-  images?: string[]; // Adjust this based on actual response structure
+  images?: string[]; // Adjust based on the actual response from fal.subscribe
   logs?: { message: string }[];
   status?: string;
 }
@@ -17,7 +18,6 @@ interface FalResult {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-
     const { prompt, num_images = 1, image_size = "512x512" } = body;
 
     const freeTrial = await checkApiLimit();
@@ -27,6 +27,7 @@ export async function POST(req: Request) {
       return new NextResponse("Free trial has expired.", { status: 403 });
     }
 
+    // Cast the result to FalResult if you are confident in the structure
     const result: FalResult = await fal.subscribe("fal-ai/flux/schnell", {
       input: {
         prompt,
@@ -41,7 +42,7 @@ export async function POST(req: Request) {
           update.logs.map((log) => log.message).forEach(console.log);
         }
       },
-    });
+    }) as FalResult; // Using type assertion here
 
     if (!isPro) {
       await increaseApiLimit();
