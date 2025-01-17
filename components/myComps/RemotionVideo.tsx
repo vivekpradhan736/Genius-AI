@@ -3,7 +3,7 @@ import {
   AbsoluteFill,
   interpolate,
   Sequence,
-  useAudioConfig,
+  useVideoConfig,
   useCurrentFrame,
   Audio,
   Img,
@@ -30,7 +30,7 @@ const RemotionVideo: React.FC<RemotionVideoProps> = ({
   captions,
   setDurationsInFrame,
 }) => {
-  const { fps } = useAudioConfig();
+  const { fps } = useVideoConfig ();
   const frame = useCurrentFrame();
 
   const getDurationFrames = (): number => {
