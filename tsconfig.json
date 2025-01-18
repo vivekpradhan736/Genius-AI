@@ -23,6 +23,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/convertWordToPdf/route.js", "app/api/video_summarizer/route.js", "app/api/video_transcript/route.js", "app/api/conversation/route.js", "app/api/code/route.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/convertWordToPdf/route.js", "app/api/video_summarizer/route.js", "app/api/video_transcript/route.js", "app/api/conversation/route.js", "app/api/code/route.js", "lib/prismadb.ts"],
   "exclude": ["node_modules"]
 }
