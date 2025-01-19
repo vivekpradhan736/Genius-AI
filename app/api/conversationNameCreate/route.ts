@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import prisma from "@/lib/prismadb";
 
-import { increaseApiLimit, checkApiLimit } from "@/lib/api-limit";
+import { checkApiLimit } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
 
 const genAI = new GoogleGenerativeAI("AIzaSyCSDGHe_Lcceu5j_Ukvcwg117rJSutotQY");
@@ -31,9 +31,9 @@ export async function POST(req: Request) {
       const response = result?.response;
       const text = response?.text();
 
-      if(!isPro) {
-        await increaseApiLimit();
-      }
+      // if(!isPro) {
+      //   await increaseApiLimit();
+      // }
 
       if (!conversationID || !text) {
         return NextResponse.json(

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { fal } from "@fal-ai/client";
 
-import { checkApiLimit } from "@/lib/api-limit";
+import { increaseApiLimit, checkApiLimit } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
 
 fal.config({
@@ -44,9 +44,9 @@ export async function POST(req: Request) {
       },
     }) as FalResult; // Using type assertion here
 
-    // if (!isPro) {
-    //   await increaseApiLimit();
-    // }
+    if (!isPro) {
+      await increaseApiLimit();
+    }
 
     return NextResponse.json(result);
   } catch (error) {
