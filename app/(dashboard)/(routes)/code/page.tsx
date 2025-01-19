@@ -30,10 +30,6 @@ const CodePage = () => {
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(
-      "🧪 The form' values that are going to be submitted to Genius"
-    );
-    console.log(values);
     try {
       const userMessage = {
         role: "user",
@@ -44,7 +40,6 @@ const CodePage = () => {
       const responce = await axios.post("http://localhost:3000/api/code", {
         messages: values.prompt,
       });
-      console.log("responce",responce)
       setMessages((current) => [...current, userMessage, responce.data]);
 
       form.reset();
@@ -54,7 +49,6 @@ const CodePage = () => {
     if (axiosError.response?.status === 403) {
       proModal.onOpen();
     }
-      console.log("⛔ [API_CONVERSATION_ERROR]: ", error);
       toast.error("Something went wrong");
 
     } finally {

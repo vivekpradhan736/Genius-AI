@@ -67,7 +67,6 @@ const FileCon = () => {
         },
       });
 
-      console.log("res",res.data)
 
       if (res.data.downloadUrls) {
         // Process each file to update its progress and download URL

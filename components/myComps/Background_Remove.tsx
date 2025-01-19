@@ -75,7 +75,6 @@ export default function ImageUpload() {
     setDragActive(false)
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       // Handle the uploaded file here
-      console.log("File dropped:", e.dataTransfer.files[0])
     }
   }
 

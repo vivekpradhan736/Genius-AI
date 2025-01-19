@@ -24,7 +24,6 @@ async function getYouTubeTranscript(videoUrl) {
     });
     const page = await browser.newPage();
 
-    console.log("Navigating to video URL...");
     await page.goto(videoUrl, { waitUntil: 'networkidle2', timeout: 30000 });
 
     const transcriptUrl = await page.evaluate(() => {
@@ -40,11 +39,9 @@ async function getYouTubeTranscript(videoUrl) {
     });
 
     await browser.close();
-    console.log("Transcript URL found: ", transcriptUrl);
 
     const response = await fetch(transcriptUrl);
     const xmlData = await response.text();
-    console.log("Fetched transcript XML data");
 
     let transcript = '';
     await xml2js.parseString(xmlData, { explicitArray: false }, (err, result) => {
@@ -70,12 +67,9 @@ async function getYouTubeTranscript(videoUrl) {
 
 async function summarizeVideo(videoUrl) {
   try {
-    console.log("Starting summarization process...");
     const transcript = await getYouTubeTranscript(videoUrl);
-    console.log("Transcript: ", transcript);
 
     const summary = await model.invoke(`Summarize this transcript: ${transcript}`);
-    console.log("Generated summary: ", summary);
 
     return summary;
   } catch (error) {

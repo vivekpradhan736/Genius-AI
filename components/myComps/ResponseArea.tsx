@@ -37,10 +37,6 @@ const ResponseArea = ({
   videoUrl,
   transcriptData,
 }: ResponseAreaProps) => {
-  console.log("type",type)
-  console.log("promptResponceArr", promptResponceArr)
-  console.log("videoUrl", videoUrl)
-  console.log("transcriptData", transcriptData)
 
   // Reverse the array to display recent messages first
   // const reversedMessages = Array.isArray(promptResponceArr) ? [...promptResponceArr].reverse() : [];
@@ -75,7 +71,6 @@ const ResponseArea = ({
   };
 
   const videoId = getYouTubeVideoId(videoUrl);
-  console.log("videoId",videoId)
 
   const handleDownload = async (url: any, filename: any) => {
     try {

@@ -57,8 +57,6 @@ const ConversationPage = () => {
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log("🧪 The form values that are going to be submitted to Genius");
-    console.log(values);
 
     try {
       const userMessage: ChatCompletionRequestMessage = {
@@ -72,7 +70,6 @@ const ConversationPage = () => {
       });
       setMessages((current) => [...current, response.data]);
 
-      console.log("Messages", messages);
       form.reset();
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -166,7 +163,6 @@ const ConversationPage = () => {
     fetchAllConversation();
   }, [fetchConversation, fetchAllConversation]);
 
-  console.log("currentConversation", currentConversation?.id);
 
   return (
     <main className="lg:ml-[350px] flex h-full w-[75%]">

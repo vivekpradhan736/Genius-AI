@@ -56,7 +56,6 @@ const VideoSummarizerPage = () => {
         "http://localhost:3000/api/video_transcript",
         values
       );
-      console.log("transcriptResponse", transcriptResponse);
 
       setVideo_transcript(transcriptResponse.data); // Use the appropriate response type
 
@@ -72,7 +71,6 @@ const VideoSummarizerPage = () => {
         setVideo_summarizer("No summary available");
       }
 
-      console.log("response", response);
       form.reset();
     } catch (error: unknown) {
       // Refine error typing

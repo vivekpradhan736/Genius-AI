@@ -16,11 +16,8 @@ export async function POST(req) {
   try {
     // const { userId } = getAuth(req);
     const body = await req.json();
-    console.log("🧪 2. The body: ", body);
 
     const { messages } = body;
-    // messages = [firstMessage, ...messages];
-    console.log("🧪 3. The Messages: ", messages);
 
     if (!messages) {
       return new NextResponse("Messages are required!", { status: 400 });

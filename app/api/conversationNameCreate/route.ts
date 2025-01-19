@@ -11,11 +11,9 @@ export async function POST(req: Request) {
   try {
     // const { userId } = getAuth(req);
     const body = await req.json();
-    console.log("🧪 2. The body: ", body);
 
     const { prompt, conversationID } = body;
     // messages = [firstMessage, ...messages];
-    console.log("🧪 3. The Messages: ", prompt);
 
     if (!prompt) {
       return new NextResponse("Messages are required!", { status: 400 });
@@ -30,7 +28,6 @@ export async function POST(req: Request) {
 
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
       const result = await model.generateContent( prompt );
-      console.log("resultVivek",result.response?.text())
       const response = result?.response;
       const text = response?.text();
 

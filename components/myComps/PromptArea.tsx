@@ -91,7 +91,6 @@ const PromptArea = ({
   AIresponses,
   transcriptResponce,
 }: PromptAreaProps) => {
-  console.log("AIresponses2",AIresponses)
 
   const [formData, setFormData] = useState<FormData>({});
   const [loading, setLoading] = useState<boolean>(false);
@@ -125,9 +124,6 @@ const PromptArea = ({
     //   toast("You don't have enough Credits");
     //   return;
     // }
-    console.log("duration", formData.duration)
-    console.log("topic", formData.topic)
-    console.log("imageStyle", formData.imageStyle)
     GetVideoScript();
   };
 

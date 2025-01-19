@@ -49,19 +49,15 @@ const PdfToWordCon = () => {
     setError(null);
 
     const formData = new FormData();
-    newFiles.forEach(fileItem => formData.append('upfiles', fileItem.file)); // Use the original File
-    console.log("test 1")
+    newFiles.forEach(fileItem => formData.append('upfiles', fileItem.file));
 
     try {
-        console.log("test 2")
       const res = await axios.post('http://localhost:3000/api/convertPdfToWord', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log("test 3")
 
-      console.log("res", res.data)
 
       if (res.data.downloadUrls) {
         // Process each file to update its progress and download URL

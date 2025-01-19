@@ -10,7 +10,6 @@ async function getYouTubeTranscriptWithTimestamps(videoUrl) {
     });
     const page = await browser.newPage();
 
-    console.log("Navigating to video URL...");
     await page.goto(videoUrl, { waitUntil: "networkidle2", timeout: 30000 });
 
     const transcriptUrl = await page.evaluate(() => {
@@ -28,11 +27,9 @@ async function getYouTubeTranscriptWithTimestamps(videoUrl) {
     });
 
     await browser.close();
-    console.log("Transcript URL found: ", transcriptUrl);
 
     const response = await fetch(transcriptUrl);
     const xmlData = await response.text();
-    console.log("Fetched transcript XML data");
 
     let transcriptWithTimestamps = [];
 
@@ -108,7 +105,6 @@ export async function POST(req) {
     const transcript = await getYouTubeTranscriptWithTimestamps(prompt);
     const intervalTranscript = groupTranscriptByInterval(transcript, 25);
 
-    console.log("intervalTranscript", intervalTranscript);
 
     return NextResponse.json(intervalTranscript);
   } catch (error) {

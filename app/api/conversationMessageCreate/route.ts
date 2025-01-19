@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     const body = await req.json();
-    console.log("content",body)
   const { conversationId, sender, content } = body;
 
   if (!conversationId || !sender || !content) {
